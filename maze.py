@@ -1,15 +1,17 @@
 import sys
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 class Maze:
     def __init__(self):
         self.maze = []
-        self.start = None
-        self.finish = None
+        self.frontier = []
+
+        self.cols, self.rows = 0, 0
+        self.start, self.finish = None, None
 
     def build(self):
         row = 0
-        with open('maze2.txt', 'r') as file:
+        with open('mazes/maze1.txt', 'r') as file:
             column = []
             for char in file.read():
                 if char == 'A':
@@ -24,12 +26,14 @@ class Maze:
                     column = []
                     row += 1
             else:
-                self.maze.append(column)
                 row += 1
+                self.rows = row
+                self.cols = len(column)
+                self.maze.append(column)
 
         return self.maze
 
-    def visualize(self):
+    def visualize(self, label = False):
         bg, bs = 2, 75
         dimension = ((len(self.maze[0])) * (bs), (len(self.maze)) * (bs))
         colors = {'#': (30, 34, 30), 'A': (174, 23, 0), 'B': (46, 193, 22), '*': (218, 252, 102), ' ': (255, 255, 255)}
@@ -41,8 +45,44 @@ class Maze:
             for ck, cv in enumerate(rv):
                 pos = [ck * bs, rk * bs, (ck + 1) * bs, (rk + 1) * bs]
                 drw.rectangle(pos, colors[cv], outline=(0, 0, 0), width=bg)
+
+                if label:
+                    font = ImageFont.truetype('assets/Lato-Bold.ttf', 14)
+                    drw.text(((ck * bs) + 10, (rk * bs) + 10), f'{rk}, {ck}', font=font, fill=(189, 195, 199))
         img.show()
 
-maze = Maze()
-maze.build()
-maze.visualize()
+    def neighbors(self, target):
+        row, col = target
+        neighbors = []
+
+        if row > 0:
+            if self.maze[row - 1][col] == ' ':
+                neighbors.append((row - 1, col))
+        if col + 1 < self.cols:
+            if self.maze[row][col + 1] == ' ':
+                neighbors.append((row, col + 1))
+        if row + 1 < self.rows:
+            if self.maze[row + 1][col] == ' ':
+                neighbors.append((row + 1, col))
+        if col > 0:
+            if self.maze[row][col - 1] == ' ':
+                neighbors.append((row, col - 1))
+
+        return neighbors
+
+    def solve(self):
+        self.frontier = self.neighbors(self.start)
+
+        while len(self.frontier) != 0:
+            print(self.frontier)
+            for row, col in self.frontier:
+                self.maze[row][col] = '*'
+                self.frontier.pop()
+                self.frontier += self.neighbors((row, col))
+
+if __name__ == '__main__':
+    maze = Maze()
+
+    maze.build()
+    maze.solve()
+    maze.visualize(label=True)
