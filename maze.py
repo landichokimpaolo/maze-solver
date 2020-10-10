@@ -1,17 +1,20 @@
 import sys
+from time import sleep
 from PIL import Image, ImageDraw, ImageFont
 
 class Maze:
     def __init__(self):
         self.maze = []
+        self.path = []
         self.frontier = []
+        self.explored = []
 
         self.cols, self.rows = 0, 0
         self.start, self.finish = None, None
 
     def build(self):
         row = 0
-        with open('mazes/maze1.txt', 'r') as file:
+        with open('mazes/maze2.txt', 'r') as file:
             column = []
             for char in file.read():
                 if char == 'A':
@@ -55,18 +58,18 @@ class Maze:
         row, col = target
         neighbors = []
 
-        if row > 0:
-            if self.maze[row - 1][col] == ' ':
-                neighbors.append((row - 1, col))
-        if col + 1 < self.cols:
-            if self.maze[row][col + 1] == ' ':
-                neighbors.append((row, col + 1))
-        if row + 1 < self.rows:
-            if self.maze[row + 1][col] == ' ':
-                neighbors.append((row + 1, col))
         if col > 0:
-            if self.maze[row][col - 1] == ' ':
+            if self.maze[row][col - 1] in [' ', 'B']:
                 neighbors.append((row, col - 1))
+        if row + 1 < self.rows:
+            if self.maze[row + 1][col] in [' ', 'B']:
+                neighbors.append((row + 1, col))
+        if col + 1 < self.cols:
+            if self.maze[row][col + 1] in [' ', 'B']:
+                neighbors.append((row, col + 1))
+        if row > 0:
+            if self.maze[row - 1][col] in [' ', 'B']:
+                neighbors.append((row - 1, col))
 
         return neighbors
 
@@ -74,15 +77,16 @@ class Maze:
         self.frontier = self.neighbors(self.start)
 
         while len(self.frontier) != 0:
-            print(self.frontier)
-            for row, col in self.frontier:
-                self.maze[row][col] = '*'
-                self.frontier.pop()
-                self.frontier += self.neighbors((row, col))
+            row, col = self.frontier[-1]
+            if self.maze[row][col] == 'B':
+                break
+            self.maze[row][col] = '*'
+            self.frontier.pop()
+            self.frontier += filter(lambda n: n not in self.frontier, self.neighbors((row, col)))
 
 if __name__ == '__main__':
     maze = Maze()
 
     maze.build()
     maze.solve()
-    maze.visualize(label=True)
+    maze.visualize(label=False)
