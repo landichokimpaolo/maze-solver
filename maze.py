@@ -54,7 +54,7 @@ class Maze:
                 drw.rectangle(pos, colors[cv], outline=(0, 0, 0), width=bg)
 
                 if label:
-                    font = ImageFont.truetype('/Users/kim/Sites/python/maze/assets/Lato-Bold.ttf', 14)
+                    font = ImageFont.truetype('/assets/Lato-Bold.ttf', 14)
                     drw.text(((ck * bs) + 10, (rk * bs) + 10), f'{rk}, {ck}', font=font, fill=(189, 195, 199))
 
         img.show()
