@@ -21,6 +21,7 @@ See file mazes/maze1.txt for reference
 ## Screenshot
 Red - Start\
 Green - End\
+White - Unexplored path\
 Violet - Wrong explored path\
 Dark Gray - Wall\
 Neon Green - Correct explored path
