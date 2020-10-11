@@ -1,16 +1,16 @@
-## Maze Solver
+# Maze Solver
 
-# Dependency
+## Dependency
 - [Pillow](https://github.com/python-pillow/Pillow)
 
-# How to use?
+## How to use?
 Specify the path of the maze file
 
 ```bash
 $ python3 maze.py "mazes/maze2.txt"
 ```
 
-# Creating your own maze
+## Creating your own maze
 A - Start\
 B - End\
 \# - Wall\
@@ -18,7 +18,7 @@ space - Path
 
 See file mazes/maze1.txt for reference
 
-# Screeshot
+## Screenshot
 Red - Start\
 Green - End\
 Violet - Wrong explored path\
