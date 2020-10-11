@@ -11,18 +11,18 @@ $ python3 maze.py "mazes/maze2.txt"
 ```
 
 # Creating your own maze
-A - Start
-B - End
-\# - Wall
+A - Start\
+B - End\
+\# - Wall\
 space - Path
 
 See file mazes/maze1.txt for reference
 
 # Screeshot
-Red - Start
-Green - End
-Violet - Wrong explored path
-Dark Gray - Wall
+Red - Start\
+Green - End\
+Violet - Wrong explored path\
+Dark Gray - Wall\
 Neon Green - Correct explored path
 
 ![alt text](assets/screenshot.png?raw=true "Screenshot")
