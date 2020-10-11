@@ -1,5 +1,4 @@
 import sys
-from time import sleep
 from PIL import Image, ImageDraw, ImageFont
 
 class Maze:
@@ -16,7 +15,7 @@ class Maze:
 
     def build(self):
         row = 0
-        with open('/Users/kim/Sites/python/maze/mazes/maze2.txt', 'r') as file:
+        with open(sys.argv[1], 'r') as file:
             column = []
             for char in file.read():
                 if char == 'A':
@@ -57,6 +56,7 @@ class Maze:
                 if label:
                     font = ImageFont.truetype('/Users/kim/Sites/python/maze/assets/Lato-Bold.ttf', 14)
                     drw.text(((ck * bs) + 10, (rk * bs) + 10), f'{rk}, {ck}', font=font, fill=(189, 195, 199))
+
         img.show()
 
     def neighbors(self, target):
@@ -96,8 +96,8 @@ class Maze:
             self.frontier += filter(lambda n: n not in self.frontier, neighbors)
 
             if (row, col) in checkpoint:
-                x = checkpoint[(row, col)]
-                self.explored = self.explored[0:x]
+                idx = checkpoint[(row, col)]
+                self.explored = self.explored[0:idx]
                 self.explored.append((row, col))
 
         for (row, col) in self.explored:
@@ -107,4 +107,4 @@ class Maze:
 
 if __name__ == '__main__':
     maze = Maze()
-    maze.solve()
+    maze.solve(explored=True)
