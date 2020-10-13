@@ -18,7 +18,9 @@ space - Path
 
 See file mazes/maze1.txt for reference
 
-## Screenshot
+## Output - Screenshot
+Returns a image file of the solved maze
+
 Red - Start\
 Green - End\
 White - Unexplored path\
