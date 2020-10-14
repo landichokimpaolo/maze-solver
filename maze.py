@@ -37,7 +37,7 @@ class Maze:
 
         return self.maze
 
-    def visualize(self, label=False, explored=False):
+    def visualize(self, label=True, explored=False):
         bg, bs = 2, 75
         dimension = ((len(self.maze[0])) * (bs), (len(self.maze)) * (bs))
         colors = {'#': (30, 34, 30), 'A': (174, 23, 0), 'B': (46, 193, 22), '*': (218, 252, 102), ' ': (255, 255, 255), 'X': (255, 255, 255)}
@@ -54,7 +54,7 @@ class Maze:
                 drw.rectangle(pos, colors[cv], outline=(0, 0, 0), width=bg)
 
                 if label:
-                    font = ImageFont.truetype('/assets/Lato-Bold.ttf', 14)
+                    font = ImageFont.truetype('assets/Lato-Bold.ttf', 14)
                     drw.text(((ck * bs) + 10, (rk * bs) + 10), f'{rk}, {ck}', font=font, fill=(189, 195, 199))
 
         img.show()
