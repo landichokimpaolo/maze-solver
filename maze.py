@@ -47,6 +47,7 @@ class Maze:
 
         img = Image.new('RGB', dimension)
         drw = ImageDraw.Draw(img)
+        font = ImageFont.truetype('assets/Lato-Bold.ttf', 14)
 
         for rk, rv in enumerate(self.maze):
             for ck, cv in enumerate(rv):
@@ -54,7 +55,6 @@ class Maze:
                 drw.rectangle(pos, colors[cv], outline=(0, 0, 0), width=bg)
 
                 if label:
-                    font = ImageFont.truetype('assets/Lato-Bold.ttf', 14)
                     drw.text(((ck * bs) + 10, (rk * bs) + 10), f'{rk}, {ck}', font=font, fill=(189, 195, 199))
 
         img.show()
